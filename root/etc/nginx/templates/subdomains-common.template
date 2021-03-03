@@ -1,0 +1,3 @@
+listen              443 ssl http2;
+listen              [::]:443 ssl http2;
+set                 $docker_host ${PROXY_HOST};

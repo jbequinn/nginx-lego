@@ -1,0 +1,15 @@
+# main server block
+server {
+    listen        443 ssl http2 default_server;
+    listen        [::]:443 ssl http2 default_server;
+    server_name   ${DOMAIN};
+
+    # security
+    include       /config/nginx/security.conf;
+
+    # enable subfolder method reverse proxy confs
+    include       /config/nginx/sites-enabled/*.subfolder.conf;
+
+    # additional config
+    include       /config/nginx/general.conf;
+}

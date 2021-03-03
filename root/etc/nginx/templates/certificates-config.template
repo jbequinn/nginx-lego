@@ -1,0 +1,6 @@
+# SSL
+ssl_certificate          /lego/certificates/${DOMAIN}.crt;
+ssl_certificate_key      /lego/certificates/${DOMAIN}.key;
+
+# verify chain of trust of OCSP response using Root CA and Intermediate certs
+ssl_trusted_certificate  /lego/certificates/${DOMAIN}.crt;
