@@ -2,7 +2,7 @@ Nginx Lego Docker Image
 =======================
 
 ## What's this ##
-This is a simple [Nginx Docker](https://hub.docker.com/_/nginx/) image with [Lego](https://github.com/go-acme/lego) to automate [Let's Encrypt](https://letsencrypt.org/) certificate generation and renewal. Currently only supported for [DuckDNS](https://www.duckdns.org/) (for both main domain and subdomains -wildcard).
+This is a simple [Nginx Docker](https://hub.docker.com/_/nginx/) image with [Lego](https://github.com/go-acme/lego) to automate [Let's Encrypt](https://letsencrypt.org/) certificate generation and renewal. Currently only supported for [DuckDNS](https://www.duckdns.org/) (for both main domain and subdomains -wildcard) and only for the dns-01 challenge.
 
 The Nginx configuration is based on the [NGINXConfig from Digital Ocean](https://www.digitalocean.com/community/tools/nginx) and the [SSL Configuration Generator from Mozilla](https://ssl-config.mozilla.org/).
 
