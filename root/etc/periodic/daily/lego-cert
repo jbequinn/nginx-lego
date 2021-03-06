@@ -27,53 +27,53 @@ mkdir -p "/lego/logs"
 # keep the last run only
 truncate -s0 "/lego/logs/lego.log"
 
-echo_timestamp "Starting process."
+echo_timestamp "- Checking SSL certificate."
 
 if [ ! -d "/lego" ]; then
-  echo_timestamp "Directory /lego not found! Exiting."
+  echo_timestamp " * Directory /lego not found! Exiting."
   exit 1
 fi
 
 if [ -z "$DOMAIN" ]; then
-  echo_timestamp "Domain is not set! Exiting."
+  echo_timestamp " * Domain is not set! Exiting."
   exit 1
 fi
 
 if [ -z "$SERVER" ]; then
-  echo_timestamp "Server is not set! Exiting."
+  echo_timestamp " * Server is not set! Exiting."
   exit 1
 fi
 
 if [ -z "$DUCKDNS_TOKEN" ]; then
-  echo_timestamp "DuckDNS token is not set! Exiting."
+  echo_timestamp " * DuckDNS token is not set! Exiting."
   exit 1
 fi
 
 if [ -z "$EMAIL" ]; then
-  echo_timestamp "Email is not set! Exiting."
+  echo_timestamp " * Email is not set! Exiting."
   exit 1
 fi
 
 if [ "$RECREATE" = true ]; then
-  echo_timestamp "Deleting all existing certificate data."
+  echo_timestamp " * Deleting all existing certificate data."
   rm -rf /lego/*
-  echo_timestamp "Data deleted."
+  echo_timestamp "  + Data deleted."
 fi
 
 if [ -d "/lego/certificates" ]; then
-  echo_timestamp "Certificates appear to exist already."
+  echo_timestamp " * Certificate directory exist."
   if openssl x509 -checkend $((60*60*24*29)) -noout -in "/lego/certificates/${DOMAIN}.crt"; then
-    echo_timestamp "Certificate is not expiring yet."
+    echo_timestamp " * Certificate is not expiring yet."
   else
-    echo_timestamp "Certificate is out of the renewal limit. Attempting renewal."
+    echo_timestamp " * Certificate is out of the renewal limit. Attempting renewal."
     run_lego renew
     nginx -s reload
   fi
 else
-  echo_timestamp "Certificates do not exist. Will create new ones."
+  echo_timestamp " * Certificate does not exist. Will create a new one."
   run_lego run
   nginx -s reload
 fi
 
-echo_timestamp "All done. Exiting."
+echo_timestamp "- All done. Exiting."
 exit 0
