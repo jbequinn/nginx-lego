@@ -7,7 +7,7 @@ SERVER="${SERVER:-""}"
 RECREATE="${RECREATE:-false}"
 
 echo_timestamp() {
-  echo "$(date -u +"%Y/%m/%d %H:%M:%S") [INFO] - $1"
+  echo "$(date -u +"%Y/%m/%d %H:%M:%S") [INFO] - $1" | tee -a "/lego/logs/lego.log"
 }
 
 run_lego() {
@@ -22,6 +22,10 @@ run_lego() {
     --dns duckdns \
     $1
 }
+
+mkdir -p "/lego/logs"
+# keep the last run only
+truncate -s0 "/lego/logs/lego.log"
 
 echo_timestamp "Starting process."
 
