@@ -7,7 +7,7 @@ fi
 
 mkdir -p "/config/nginx/sites-enabled"
 
-echo "- Checking configuration files"
+echo "- Checking configuration files:"
 
 if [ ! -f "/config/nginx/proxy.conf" ]; then
   echo "  * Copying proxy.conf"
