@@ -4,7 +4,6 @@ DOMAIN="${DOMAIN:-""}"
 DUCKDNS_TOKEN="${DUCKDNS_TOKEN:-""}"
 EMAIL="${EMAIL:-""}"
 SERVER="${SERVER:-""}"
-RECREATE="${RECREATE:-false}"
 
 echo_timestamp() {
   echo "$(date -u +"%Y/%m/%d %H:%M:%S") [INFO] - $1" | tee -a "/lego/logs/lego.log"
@@ -52,12 +51,6 @@ fi
 if [ -z "$EMAIL" ]; then
   echo_timestamp " * Email is not set! Exiting."
   exit 1
-fi
-
-if [ "$RECREATE" = true ]; then
-  echo_timestamp " * Deleting all existing certificate data."
-  rm -rf /lego/*
-  echo_timestamp "  + Data deleted."
 fi
 
 if [ -d "/lego/certificates" ]; then
