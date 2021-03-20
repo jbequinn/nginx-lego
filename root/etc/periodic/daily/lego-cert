@@ -26,7 +26,7 @@ mkdir -p "/lego/logs"
 # keep the last run only
 truncate -s0 "/lego/logs/lego.log"
 
-echo_timestamp "- Checking SSL certificate."
+echo_timestamp "Checking SSL certificates."
 
 if [ ! -d "/lego" ]; then
   echo_timestamp " * Directory /lego not found! Exiting."
@@ -54,11 +54,11 @@ if [ -z "$EMAIL" ]; then
 fi
 
 if [ -d "/lego/certificates" ]; then
-  echo_timestamp " * Certificate directory exist."
-  if openssl x509 -checkend $((60*60*24*29)) -noout -in "/lego/certificates/${DOMAIN}.crt"; then
-    echo_timestamp " * Certificate is not expiring yet."
+  echo_timestamp " * Using existing certificates directory."
+  if openssl x509 -checkend $((60*60*24*29)) -noout -in "/lego/certificates/${DOMAIN}.crt" >/dev/null; then
+    echo_timestamp " * Nothing to do. Certificate is valid until $(openssl x509 -enddate -noout -in "/lego/certificates/${DOMAIN}.crt")"
   else
-    echo_timestamp " * Certificate is out of the renewal limit. Attempting renewal."
+    echo_timestamp " * Certificate is expiring in less than 30 days. Attempting renewal."
     run_lego renew
     nginx -s reload
   fi
@@ -68,5 +68,5 @@ else
   nginx -s reload
 fi
 
-echo_timestamp "- All done. Exiting."
+echo_timestamp "All done. Exiting."
 exit 0
