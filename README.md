@@ -29,19 +29,14 @@ server {
 }
 ```
 
-## Building ##
-Build using the command:
-```
-docker build --no-cache --pull -t my-nginx:1.19-alpine-1 .
-```
 ## Running ##
 This image is intended to be run with docker-compose. Here's an example with the expected environment variables:
 ```
 version: "3.5"
 services:
-  nginx:    
+  nginx:
     container_name: nginx_proxy
-    image: my-nginx:1.19-alpine-1
+    image: jbequinn/nginx-lego:1.19.8.1
     restart: unless-stopped
     ports:
       - "8443:443"
@@ -62,4 +57,10 @@ services:
 volumes:
   lego:
   config:
+```
+
+## Building ##
+If you prefer not to use the image from [Docker Hub](https://hub.docker.com/repository/docker/jbequinn/nginx-lego), you can build your own image using the command:
+```
+docker build --no-cache --pull -t my-nginx:1.19-alpine-1 .
 ```
