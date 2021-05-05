@@ -56,9 +56,9 @@ fi
 if [ -d "/lego/certificates" ]; then
   echo_timestamp " * Using existing certificates directory."
   if openssl x509 -checkend $((60*60*24*29)) -noout -in "/lego/certificates/${DOMAIN}.crt" >/dev/null; then
-    echo_timestamp " * Nothing to do. Certificate is valid until $(openssl x509 -enddate -noout -in "/lego/certificates/${DOMAIN}.crt")"
+    echo_timestamp " * Nothing to do. Certificate is not expiring soon. Valid $(openssl x509 -enddate -noout -in "/lego/certificates/${DOMAIN}.crt")"
   else
-    echo_timestamp " * Certificate is expiring in less than 30 days. Attempting renewal."
+    echo_timestamp " * Certificate is expiring in less than 29 days. Attempting renewal."
     run_lego renew
     nginx -s reload
   fi
