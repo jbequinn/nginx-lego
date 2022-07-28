@@ -1,4 +1,4 @@
-FROM nginx:1.23.0-alpine
+FROM nginx:1.23.1-alpine
 
 RUN apk update
 RUN apk add --no-cache --upgrade tzdata openssl
